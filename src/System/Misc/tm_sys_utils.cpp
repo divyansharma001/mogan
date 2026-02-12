@@ -258,7 +258,9 @@ is_community_stem () {
 string
 stem_user_agent () {
 #ifdef QTTEXMACS
-  return qt_stem_user_agent ();
+  static string user_agent= qt_stem_user_agent ();
+
+  return user_agent;
 #else
   return "unknown";
 #endif
@@ -267,7 +269,9 @@ stem_user_agent () {
 string
 stem_device_id () {
 #ifdef QTTEXMACS
-  return qt_stem_device_id ();
+  static string device_id= qt_stem_device_id ();
+
+  return device_id;
 #else
   return "unknown";
 #endif
