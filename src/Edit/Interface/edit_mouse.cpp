@@ -585,6 +585,7 @@ edit_interface_rep::table_line_start (const table_hit& hit, SI x, SI y) {
 
   path fp= ::table_search_format (et, tp);
   if (is_nil (fp)) return;
+  if (!is_true_table (fp)) return;
 
   table_resizing_type   = 1;
   table_line_vertical   = hit.orient == "col";
@@ -825,10 +826,18 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     rectangles rs;
     tree       r= eb->message (tree ("table-loc?"), x, y, rs);
     if (is_func (r, TUPLE) && r[0] == "table-loc") {
-      string orient= as_string (r[1]);
-      if (orient == "cell") hovering_table= -1;
-      else if (orient == "row") hovering_table= 1;
-      else if (orient == "col") hovering_table= 2;
+      // Check if the table is a "true table" (not matrix/det/etc.)
+      path hover_tp= tree_path (find_innermost_scroll (eb, tp), x, y, 0);
+      while (!is_nil (hover_tp) && !has_subtree (et, hover_tp))
+        hover_tp= path_up (hover_tp);
+      path hover_fp=
+          is_nil (hover_tp) ? path () : ::table_search_format (et, hover_tp);
+      if (!is_nil (hover_fp) && is_true_table (hover_fp)) {
+        string orient= as_string (r[1]);
+        if (orient == "cell") hovering_table= -1;
+        else if (orient == "row") hovering_table= 1;
+        else if (orient == "col") hovering_table= 2;
+      }
     }
   }
   bool hovering_hlink= false;

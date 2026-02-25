@@ -1193,7 +1193,11 @@ edit_interface_rep::is_true_table (path p) {
         is_compound (qt, "gather") || is_compound (qt, "gather*") ||
         is_compound (qt, "multline") || is_compound (qt, "multline*") ||
         is_compound (qt, "alignat") || is_compound (qt, "alignat*") ||
-        is_compound (qt, "flalign") || is_compound (qt, "flalign*"))
+        is_compound (qt, "flalign") || is_compound (qt, "flalign*") ||
+        is_compound (qt, "matrix") || is_compound (qt, "matrix*") ||
+        is_compound (qt, "bmatrix") || is_compound (qt, "Bmatrix") ||
+        is_compound (qt, "det") || is_compound (qt, "choice") ||
+        is_compound (qt, "stack"))
       return false;
   }
   return true;
