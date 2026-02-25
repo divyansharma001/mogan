@@ -68,13 +68,9 @@
 
   <new-exercise|solution|Solution>
 
-  <new-remark|question|Question>
+  <new-question|question|Question>
 
-  <new-remark|answer|Answer>
-
-  <individual-counter|question>
-
-  <individual-counter|answer>
+  <new-question|answer|Answer>
 </body>
 
 <\initial>

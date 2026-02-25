@@ -44,6 +44,12 @@
 
   <group-individual-counters|algorithm-env>
 
+  <new-counter-group|question-env>
+
+  <add-to-counter-group|question-env|std-env>
+
+  <group-individual-counters|question-env>
+
   <new-counter-group|figure-env>
 
   <add-to-counter-group|figure-env|std-env>
@@ -76,6 +82,8 @@
   <assign|new-remark|<macro|env|name|<new-env|<arg|env>|<arg|name>|theorem-env|render-remark>>>
 
   <assign|new-exercise|<macro|env|name|<new-env|<arg|env>|<arg|name>|exercise-env|render-exercise>>>
+
+  <assign|new-question|<macro|env|name|<new-env|<arg|env>|<arg|name>|question-env|render-remark>>>
 
   <\active*>
     <\src-comment>
