@@ -257,6 +257,7 @@ init_unicode_substitution () {
   unicode_subst (0x2111, 0x4a, 1, "frak");
   unicode_subst (0x211c, 0x52, 1, "frak");
   unicode_subst (0x2128, 0x5a, 1, "frak");
+  unicode_subst (0x210e, 0x68, 1, "italic-math"); // U+210E PLANCK CONSTANT
   unicode_subst (0x2102, 0x43, 1, "bbb");
   unicode_subst (0x210d, 0x48, 1, "bbb");
   unicode_subst (0x2115, 0x4e, 1, "bbb");
@@ -784,7 +785,9 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
     nr = 0;
     pos= pos + 1;
     if (is_locase (s[0])) {
-      r= "<#" * to_Hex (0x1d44e + (int) (s[0] - 'a')) * ">";
+      if (s[0] == 'h')
+        r= "<#210E>"; // U+210E PLANCK CONSTANT (math italic small h)
+      else r= "<#" * to_Hex (0x1d44e + (int) (s[0] - 'a')) * ">";
     }
     else if (is_upcase (s[0])) {
       r= "<#" * to_Hex (0x1d434 + (int) (s[0] - 'A')) * ">";
