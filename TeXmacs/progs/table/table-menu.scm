@@ -553,6 +553,14 @@
 	---
 	("Table properties" (open-table-properties)))))
 
+(tm-define (focus-tag-name l)
+  (:require (== l 'tabular*))
+  "centered tabular")
+
+(tm-define (focus-tag-name l)
+  (:require (== l 'block*))
+  "centered block")
+
 (define (cell-halign-icon)
   (with h (cell-get-format "cell-halign")
     (cond ((== h "l") "tm_cell_left.xpm")
