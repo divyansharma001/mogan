@@ -24,9 +24,11 @@
 #include "mupdf_picture.hpp"
 #endif
 
+#include <QApplication>
 #include <QByteArray>
 #include <QDebug>
 #include <QFileDialog>
+#include <QKeySequence>
 #include <QString>
 #include <QStringList>
 
@@ -344,6 +346,24 @@ qt_chooser_widget_rep::perform_dialog () {
   r.moveCenter (pos);
   dialog->setGeometry (r);
 
+#ifdef Q_OS_MACOS
+  // On macOS, QAction shortcuts registered in the menu bar become NSMenuItem
+  // key equivalents. When a native file dialog is open, these key equivalents
+  // intercept standard editing shortcuts (Cmd+V, Cmd+C, Cmd+X, Cmd+A) before
+  // the dialog's text field can handle them. Temporarily clearing all QAction
+  // shortcuts allows the native dialog to process these keys normally.
+  QList<QPair<QAction*, QKeySequence>> savedShortcuts;
+  QWidget*                             mainWin= QApplication::activeWindow ();
+  if (mainWin) {
+    for (QAction* action : mainWin->findChildren<QAction*> ()) {
+      if (!action->shortcut ().isEmpty ()) {
+        savedShortcuts.append (qMakePair (action, action->shortcut ()));
+        action->setShortcut (QKeySequence ());
+      }
+    }
+  }
+#endif
+
   QStringList fileNames;
   file= "#f";
   if (dialog->exec ()) {
@@ -428,6 +448,13 @@ qt_chooser_widget_rep::perform_dialog () {
   }
 
   delete dialog;
+
+#ifdef Q_OS_MACOS
+  // Restore menu shortcuts after the native dialog is closed
+  for (const auto& pair : savedShortcuts) {
+    pair.first->setShortcut (pair.second);
+  }
+#endif
 
   cmd ();
   if (!is_nil (quit)) quit ();
