@@ -95,6 +95,7 @@
         (switch-to-buffer cur)
         (buffer-close buf))
       (print-to-file fname))
+  (system-wait "" "")
   (user-confirm-open-pdf fname))
 
 (tm-define (wrapped-print-to-pdf-embeded-with-tm fname)
@@ -118,6 +119,7 @@
     (print-to-file fname)
     (unless (attach-doc-to-exported-pdf fname)
         (notify-now "Fail to attach tm to pdf"))))
+  (system-wait "" "")
   (user-confirm-open-pdf fname))
 
 (tm-define (wrapped-print-to-pdf-embeded-with-tmu fname)
@@ -141,6 +143,7 @@
     (print-to-file fname)
     (unless (attach-doc-to-exported-pdf fname)
         (notify-now "Fail to attach tmu to pdf"))))
+  (system-wait "" "")
   (user-confirm-open-pdf fname))
 
 (tm-define (attach-doc-to-exported-pdf fname)
