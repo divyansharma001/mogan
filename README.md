@@ -36,7 +36,7 @@ Mogan STEM is a professional scientific writing platform targeted at mathematics
 - Clear structure for different content types and well-organized document hierarchy
 - Click to insert environments; complex typesetting becomes simple
 
-![hesis-level Edits PRE](./public/images/Thesis-level-Edits.png)
+![Thesis-level Edits PRE](./public/images/Thesis-level-Edits.png)
 
 ### Scientific Document Creation
 - High-quality typesetting: professional document formatting with TeX quality output
@@ -57,27 +57,32 @@ Mogan STEM is a professional scientific writing platform targeted at mathematics
 
 ### Installation
 
-#### Mogan STEM (Community Version)
-From Release: Download the latest release for your platform from [GitHub releases](https://github.com/XmacsLabs/mogan/releases).
+#### Option 1: Mogan STEM (Community Version)
+From Release: Download the latest release for your platform from [GitHub releases](https://github.com/MoganLab/mogan/releases).
 
-Build from Source:
+#### Option 2: Build from Source
+
+Clone the repository:
+
 ```bash
-# Clone the repository
-git clone https://github.com/XmacsLabs/mogan.git
+git clone https://github.com/MoganLab/mogan.git
 cd mogan
-
-# Build with xmake
-xmake build stem
 ```
 
-#### Liii STEM (Commercial Version)
+For detailed setup, dependency installation, build, and run instructions, please follow the guide for your platform:
+
+- [GNU/Linux Development Guide](devel/Develop_on_Linux.md)
+- [Windows Development Guide](devel/Develop_on_Windows.md)
+- [macOS Development Guide](devel/Develop_on_macOS.md)
+
+#### Option 3: Liii STEM (Commercial Version)
 For the commercial version with built-in AI features, please visit the [Liii STEM official website](https://liiistem.cn) for installation options.
 
 ## Documentation & Learning
 
 ### Community Version Resources
 - Mogan website: [https://mogan.app](https://mogan.app)
-- GitHub repository: [github.com/XmacsLabs/mogan](https://github.com/XmacsLabs/mogan)
+- GitHub repository: [github.com/MoganLab/mogan](https://github.com/MoganLab/mogan)
 - User manual: comprehensive guide covering all features ([Liii/Mogan STEM docs](https://liiistem.cn/docs/welcome.html))
 - Video tutorials: step-by-step learning materials
 

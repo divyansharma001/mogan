@@ -631,8 +631,10 @@ edit_interface_rep::compute_env_rects (path p, rectangles& rs, bool recurse) {
       else selection_correct (p1, p2, q1, q2);
       selection sel= eb->find_check_selection (q1, q2);
       if (N (focus_get ()) >= N (p))
-        if (!recurse || get_preference ("show full context") == "on")
-          rs << outlines (sel->rs, pixel);
+        if (!recurse || get_preference ("show full context") == "on") {
+          if (recurse) rs << outlines (sel->rs, pixel);
+          else rs << thicken (sel->rs, 0, 2 * pixel);
+        }
     }
     set_access_mode (old_mode);
     if (recurse || N (rs) == 0) compute_env_rects (path_up (p), rs, recurse);
@@ -1195,6 +1197,14 @@ edit_interface_rep::is_true_table (path p) {
         is_compound (qt, "multline") || is_compound (qt, "multline*") ||
         is_compound (qt, "alignat") || is_compound (qt, "alignat*") ||
         is_compound (qt, "flalign") || is_compound (qt, "flalign*"))
+      return false;
+    if (is_compound (qt, "cases") || is_compound (qt, "choice") ||
+        is_compound (qt, "det") || is_compound (qt, "stack") ||
+        is_compound (qt, "array") || is_compound (qt, "array*") ||
+        is_compound (qt, "matrix") || is_compound (qt, "matrix*") ||
+        is_compound (qt, "bmatrix") || is_compound (qt, "Bmatrix") ||
+        is_compound (qt, "pmatrix") || is_compound (qt, "vmatrix") ||
+        is_compound (qt, "Vmatrix") || is_compound (qt, "smallmatrix"))
       return false;
   }
   return true;

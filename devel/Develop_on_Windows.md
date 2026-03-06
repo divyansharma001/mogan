@@ -21,18 +21,18 @@
 - **chocolatey**：
   
   ```powershell
-  choco  install xmake
+  choco install xmake
   ```
-- 验证：
+- Verify:
   ```powershell
   xmake --version
   ```
 ## Step 2: Get Source Code, Compile and Run
-### Chose your working directory, for example E:\TestFile:
+### Choose your working directory, for example E:\TestFile:
 
 ```powershell
 cd E:\TestFile
-git clone git@gitee.com:XmacsLabs/mogan.git
+git clone https://github.com/MoganLab/mogan.git
 cd mogan
 ```
 
@@ -70,4 +70,4 @@ xmake run stem
 ```
 
 ## Please format code before committing
-[Formatting Guide](https://gitee.com/XmacsLabs/mogan/blob/main/devel/Format_ZH.md)
+[Formatting Guide](Format_EN.md)
