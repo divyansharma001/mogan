@@ -28,9 +28,12 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QFileDialog>
-#include <QKeySequence>
 #include <QString>
 #include <QStringList>
+
+#ifdef OS_MACOS
+#include "MacOS/mac_utilities.h"
+#endif
 
 #include <moebius/data/scheme.hpp>
 
@@ -346,22 +349,13 @@ qt_chooser_widget_rep::perform_dialog () {
   r.moveCenter (pos);
   dialog->setGeometry (r);
 
-#ifdef Q_OS_MACOS
+#ifdef OS_MACOS
   // On macOS, QAction shortcuts registered in the menu bar become NSMenuItem
   // key equivalents. When a native file dialog is open, these key equivalents
   // intercept standard editing shortcuts (Cmd+V, Cmd+C, Cmd+X, Cmd+A) before
-  // the dialog's text field can handle them. Temporarily clearing all QAction
-  // shortcuts allows the native dialog to process these keys normally.
-  QList<QPair<QAction*, QKeySequence>> savedShortcuts;
-  QWidget*                             mainWin= QApplication::activeWindow ();
-  if (mainWin) {
-    for (QAction* action : mainWin->findChildren<QAction*> ()) {
-      if (!action->shortcut ().isEmpty ()) {
-        savedShortcuts.append (qMakePair (action, action->shortcut ()));
-        action->setShortcut (QKeySequence ());
-      }
-    }
-  }
+  // the dialog's text field can handle them. Temporarily removing the native
+  // menu allows the dialog to process these keys normally.
+  mac_save_and_clear_menu ();
 #endif
 
   QStringList fileNames;
@@ -449,11 +443,8 @@ qt_chooser_widget_rep::perform_dialog () {
 
   delete dialog;
 
-#ifdef Q_OS_MACOS
-  // Restore menu shortcuts after the native dialog is closed
-  for (const auto& pair : savedShortcuts) {
-    pair.first->setShortcut (pair.second);
-  }
+#ifdef OS_MACOS
+  mac_restore_menu ();
 #endif
 
   cmd ();
