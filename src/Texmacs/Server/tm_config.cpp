@@ -326,18 +326,7 @@ kbd_render (tree t) {
 }
 
 static string
-kbd_system_prevails (string s) {
-  string laf= get_preference ("look and feel");
-  bool   mac= os_macos () && (laf == "default" || laf == "macos");
-  if (mac && starts (s, "A-")) {
-    string ss= s (2, N (s));
-    string r = "escape " * ss;
-    if (starts (ss, "S-")) ss= ss (2, N (ss));
-    if (N (ss) == 1) return r;
-    else return s;
-  }
-  else return s;
-}
+kbd_system_prevails (string s) { return s; }
 
 tree
 tm_config_rep::kbd_system_rewrite (string s) {
