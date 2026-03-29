@@ -942,6 +942,67 @@
     (=> (eval (get-verbatim-section-title t #f))
         (link focus-section-menu))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Focus menu preferences for section titles
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (focus-section-title-style-var t)
+  (with l (tree-label t)
+    (cond ((in? l '(chapter chapter*)) "chapter-title-style")
+          ((in? l '(section section*)) "section-title-style")
+          ((in? l '(subsection subsection*)) "subsection-title-style")
+          ((in? l '(subsubsection subsubsection*)) "subsubsection-title-style")
+          ((in? l '(paragraph paragraph*)) "paragraph-title-style")
+          ((in? l '(subparagraph subparagraph*)) "subparagraph-title-style")
+          (else #f))))
+
+(tm-define (focus-has-preferences? t)
+  (:require (section-context? t))
+  #t)
+
+(tm-define (section-number-style-var t)
+  (with l (tree-label t)
+    (cond ((== l 'chapter) "chapter-number-style")
+          ((== l 'section) "section-number-style")
+          ((== l 'subsection) "subsection-number-style")
+          ((== l 'subsubsection) "subsubsection-number-style")
+          (else #f))))
+
+(tm-define (safe-init-env var)
+  (if (or (string? var) (symbol? var))
+      (get-init-env var)
+      #f))
+
+(tm-menu (focus-preferences-menu t)
+  (:require (section-context? t))
+  (with var (focus-section-title-style-var t)
+    (when var
+      (group "Title style")
+      ((check "Centered" "v" (== (safe-init-env var) "center"))
+       (init-env var "center"))
+      ((check "Left aligned" "v" (== (safe-init-env var) "left"))
+       (init-env var "left"))
+      ---))
+  (with num-var (section-number-style-var t)
+    (when num-var
+      (group "Number style")
+      ((check "Arabic (1, 2, 3)" "v" (== (safe-init-env num-var) "arabic"))
+       (init-env num-var "arabic"))
+      ((check "Hanzi (一, 二, 三)" "v" (== (safe-init-env num-var) "hanzi"))
+       (init-env num-var "hanzi"))
+      ((check "Roman (I, II, III)" "v" (== (safe-init-env num-var) "Roman"))
+       (init-env num-var "Roman"))
+      ((check "roman (i, ii, iii)" "v" (== (safe-init-env num-var) "roman"))
+       (init-env num-var "roman"))
+      ((check "Alpha (A, B, C)" "v" (== (safe-init-env num-var) "Alpha"))
+       (init-env num-var "Alpha"))
+      ((check "alpha (a, b, c)" "v" (== (safe-init-env num-var) "alpha"))
+       (init-env num-var "alpha"))
+      ((check (verbatim "Circle (①, ②, ③)") "v" (== (safe-init-env num-var) "circle"))
+       (init-env num-var "circle"))
+      ---))
+  (former t))
+
 (tm-define (child-proposals t i)
   (:require (and (tree-in? t '(bibliography bibliography*)) (<= i 1)))
   (if (== i 0)

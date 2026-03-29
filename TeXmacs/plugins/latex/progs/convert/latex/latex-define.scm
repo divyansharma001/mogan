@@ -563,13 +563,9 @@
 
 (smart-table latex-texmacs-environment
   ("proof"
-   (!append (noindent) (textbf (!append (!translate "Proof") "\\ "))
-            ---
-            (hspace* (fill)) (!math (Box)) (medskip)))
+   ((!begin "proof") ---))
   ("proof*"
-   (!append (noindent) (textbf (!append 1 "\\ "))
-            ---
-            (hspace* (fill)) (!math (Box)) (medskip)))
+   ((!begin "proof" (!option 1)) ---))
   ("leftaligned"
    ((!begin "flushleft") ---))
   ("rightaligned"

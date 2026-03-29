@@ -34,9 +34,49 @@
 
   <assign|in-appendix|false>
 
+  <assign|chapter-title-style|left>
+
+  <assign|section-title-style|left>
+
+  <assign|subsection-title-style|left>
+
+  <assign|subsubsection-title-style|left>
+
+  <assign|paragraph-title-style|left>
+
+  <assign|subparagraph-title-style|left>
+
+  <assign|chapter-number-style|arabic>
+
+  <assign|section-number-style|arabic>
+
+  <assign|subsection-number-style|arabic>
+
+  <assign|subsubsection-number-style|arabic>
+
   <drd-props|sectional-short-style|macro-parameter|boolean>
 
+  <drd-props|chapter-number-style|macro-parameter|string>
+
+  <drd-props|section-number-style|macro-parameter|string>
+
+  <drd-props|subsection-number-style|macro-parameter|string>
+
+  <drd-props|subsubsection-number-style|macro-parameter|string>
+
   <drd-props|sectional-sep|macro-parameter|regular>
+
+  <drd-props|chapter-title-style|macro-parameter|string>
+
+  <drd-props|section-title-style|macro-parameter|string>
+
+  <drd-props|subsection-title-style|macro-parameter|string>
+
+  <drd-props|subsubsection-title-style|macro-parameter|string>
+
+  <drd-props|paragraph-title-style|macro-parameter|string>
+
+  <drd-props|subparagraph-title-style|macro-parameter|string>
 
   <\active*>
     <\src-comment>
@@ -92,6 +132,20 @@
   <assign|sectional-normal-bold|<macro|name|<style-with|src-compact|none|<sectional-normal|<strong|<arg|name>>>>>>
 
   <assign|sectional-centered-bold|<macro|name|<style-with|src-compact|none|<sectional-centered|<strong|<arg|name>>>>>>
+
+  <assign|sectional-select-bold|<macro|style|name|<if|<equal|<arg|style>|center>|<sectional-centered-bold|<arg|name>>|<sectional-normal-bold|<arg|name>>>>>
+
+  <assign|chapter-title-render|<macro|name|<sectional-select-bold|<value|chapter-title-style>|<arg|name>>>>
+
+  <assign|section-title-render|<macro|name|<sectional-select-bold|<value|section-title-style>|<arg|name>>>>
+
+  <assign|subsection-title-render|<macro|name|<sectional-select-bold|<value|subsection-title-style>|<arg|name>>>>
+
+  <assign|subsubsection-title-render|<macro|name|<sectional-select-bold|<value|subsubsection-title-style>|<arg|name>>>>
+
+  <assign|paragraph-title-render|<macro|name|<sectional-select-bold|<value|paragraph-title-style>|<arg|name>>>>
+
+  <assign|subparagraph-title-render|<macro|name|<sectional-select-bold|<value|subparagraph-title-style>|<arg|name>>>>
 
   <assign|sectional-prefixed|<macro|prefix|name|<prefixed-line|<arg|prefix>|<arg|name>>>>
 
@@ -179,11 +233,13 @@
 
   <assign|display-part|<macro|nr|<number|<arg|nr>|Roman>>>
 
-  <assign|display-section|<macro|nr|<if|<sectional-short-style>|<arg|nr>|<chapter-prefix><arg|nr>>>>
+  <assign|display-chapter|<macro|nr|<number|<arg|nr>|<value|chapter-number-style>>>>
 
-  <assign|display-subsection|<macro|nr|<section-prefix><arg|nr>>>
+  <assign|display-section|<macro|nr|<if|<sectional-short-style>|<number|<arg|nr>|<value|section-number-style>>|<chapter-prefix><number|<arg|nr>|<value|section-number-style>>>>>
 
-  <assign|display-subsubsection|<macro|nr|<subsection-prefix><arg|nr>>>
+  <assign|display-subsection|<macro|nr|<section-prefix><number|<arg|nr>|<value|subsection-number-style>>>>
+
+  <assign|display-subsubsection|<macro|nr|<subsection-prefix><number|<arg|nr>|<value|subsubsection-number-style>>>>
 
   <assign|display-paragraph|<macro|nr|<subsubsection-prefix><arg|nr>>>
 

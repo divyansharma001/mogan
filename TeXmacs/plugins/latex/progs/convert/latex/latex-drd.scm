@@ -55,6 +55,7 @@
   (!verbatim "alltt")
   (!verbatim* "alltt")
   (begin-alltt "alltt")
+  (begin-proof "amsthm")
 
   (begin-tabularx "tabularx")
 
