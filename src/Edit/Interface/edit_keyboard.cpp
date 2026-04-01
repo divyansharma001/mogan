@@ -18,6 +18,8 @@
 #include "new_window.hpp"
 #include "object_l5.hpp"
 #include "preferences.hpp"
+#include "scheme.hpp"
+#include "string.hpp"
 #include "tm_buffer.hpp"
 #include "tm_window.hpp"
 
@@ -102,6 +104,7 @@ edit_interface_rep::interrupt_shortcut () {
 bool
 edit_interface_rep::try_shortcut (string comb) {
   int     status;
+  bool    executed= false;
   command cmd;
   string  shorth;
   string  help;
@@ -142,8 +145,21 @@ edit_interface_rep::try_shortcut (string comb) {
       call ("set-temporary-message", tree (CONCAT, "keyboard shortcut: ", rew),
             verbatim (rhs), shorth == "" ? 1 : 3000);
     }
-    if ((status & 1) == 1) cmd ();
-    else if (N (shorth) > 0) call ("kbd-insert", shorth);
+    if ((status & 1) == 1) {
+      cmd ();
+      executed= true;
+    }
+    else if (N (shorth) > 0) {
+      call ("kbd-insert", shorth);
+      executed= true;
+    }
+    if (executed) {
+      string mode= as_string (call ("get-env", "mode"));
+      if (mode == "math") {
+        message_r= "";
+        set_right_footer ();
+      }
+    }
     // cout << "Mark= " << sh_mark << "\n";
     string mode= as_string (call ("get-env", "mode"));
     if (mode == "math" && get_preference ("completion style") == "popup") {
