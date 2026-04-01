@@ -978,8 +978,7 @@
 
 (tm-define (section-prefix-sep-var t)
   (with l (tree-label t)
-    (cond ((== l 'chapter) "chapter-prefix-sep")
-          ((== l 'section) "section-prefix-sep")
+    (cond ((== l 'section) "section-prefix-sep")
           ((== l 'subsection) "subsection-prefix-sep")
           ((== l 'subsubsection) "subsubsection-prefix-sep")
           (else #f))))
@@ -1047,9 +1046,8 @@
       ((check "-" "v" (== (safe-init-env sep-var) "-"))
        (init-env sep-var "-"))
       ((check "space" "v" (== (safe-init-env sep-var) " "))
-       (init-env sep-var " "))
-      ((check "none" "v" (== (safe-init-env sep-var) ""))
-       (init-env sep-var "")))))
+       (init-env sep-var " "))))
+) ;menu-bind
 
 (menu-bind section-prefix-sep-menu
   (with prefix-sep-var (section-prefix-sep-var (focus-tree))
@@ -1061,9 +1059,8 @@
       ((check "-" "v" (== (safe-init-env prefix-sep-var) "-"))
        (init-env prefix-sep-var "-"))
       ((check "space" "v" (== (safe-init-env prefix-sep-var) " "))
-       (init-env prefix-sep-var " "))
-      ((check "none" "v" (== (safe-init-env prefix-sep-var) ""))
-       (init-env prefix-sep-var "")))))
+       (init-env prefix-sep-var " "))))
+) ;menu-bind
 
 (tm-menu (focus-preferences-menu t)
   (:require (section-context? t))
@@ -1097,11 +1094,11 @@
         ---))
   (with sep-var (section-sep-var t)
     (if sep-var
-        (-> "Separator" (link section-sep-menu))
+        (-> "Number-title separator" (link section-sep-menu))
         ---))
   (with prefix-sep-var (section-prefix-sep-var t)
     (if prefix-sep-var
-        (-> "Prefix separator" (link section-prefix-sep-menu))
+        (-> "Sub-level separator" (link section-prefix-sep-menu))
         ---))
   (dynamic (focus-tag-edit-menu (tree-label t))))
 
