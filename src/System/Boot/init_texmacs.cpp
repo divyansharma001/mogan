@@ -201,10 +201,9 @@ init_texmacs_path (int& argc, char** argv) {
   // Mac bundle environment initialization
   // We set some environment variables when the executable
   // is in a .app bundle on MacOSX.
-  // Always trust the bundled resource path instead of any inherited
-  // TEXMACS_PATH from the user's environment.
   builtin_texmacs_path= as_string (exedir * "../Resources/share/" * PREFIX_DIR);
-  set_env ("TEXMACS_PATH", builtin_texmacs_path);
+  if (exists (url_system (builtin_texmacs_path)))
+    set_env ("TEXMACS_PATH", builtin_texmacs_path);
 #endif
 
 #if defined(OS_MINGW) || defined(OS_WIN)
